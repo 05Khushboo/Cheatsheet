@@ -1,3 +1,4 @@
+//correct
 map<int,int> pfact_spf(int n)
 {
   vector<int>sprime = smallest_prime_factors(n);
@@ -9,7 +10,6 @@ map<int,int> pfact_spf(int n)
   }
  return smallest_pfact_freq;
 }
-
 vector<int> smallest_fact(int n)
 {
   vector<int>smallest_fac(n+1);
@@ -27,7 +27,6 @@ vector<int> smallest_fact(int n)
     }
   }
   return smallest_fac;
-
 }
 
 

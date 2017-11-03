@@ -1,3 +1,4 @@
+//correct
 vector<int> fact(int n)
 {
   vector<int>facts;

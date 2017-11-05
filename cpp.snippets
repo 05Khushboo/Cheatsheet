@@ -1,84 +1,117 @@
-snippet pow_modulus
-int power(int x, int y, int mod)
-{
-    int res = 1;    
-    x = x % mod;
-    while (y > 0) {
-        if (y & 1) res = (long long)res*x % mod;
-        y = y>>1; 
-        x = (long long)x*x % mod;
-    }
-    return res;
+snippet cpp
+#include <bits/stdc++.h>
+
+using namespace std;
+#define ll long long
+
+int main(void){
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
 }
-int inv_modulus(int x, int mod)
-{
-  return power(x,mod-2,mod);
+endsnippet
+
+snippet cpp_test
+#include <bits/stdc++.h>
+using namespace std;
+
+#define ll long long
+int main(void){
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+	int t;
+	cin >> t;
+	while(t--){
+
+	}
+}
+endsnippet
+
+snippet power_modulus
+inline int power_mod(int x, int y, int mod) {
+		// status: verified, working correctly
+		// requirements: nothing
+		int res = 1;		
+		x = x % mod;
+		while (y > 0) {
+				if (y & 1) res = (long long)res*x % mod;
+				y = y>>1; 
+				x = (long long)x*x % mod;
+		}
+		return res;
+}
+endsnippet
+
+snippet inverse_modulus
+int inv_modulus(int x, int mod) {
+	// status: correct
+	return power_mod(x,mod-2,mod);
 }
 endsnippet
 
 snippet dijkstra
-void Dijkstra(int n)
-{
-  // distance array : dist, visited array : vis, 
-  // graph : graph, set : pq
-  set<pair<ll,ll> > pq;
-  for(int i = 0;i<=n;i++) dist[i] = 1E9, vis[i] = 0;
-  dist[1] = 0; 
-  pq.insert({0,1});
-  while(!pq.empty())
-  {
-    pair<int,int> p = *pq.begin();
-    pq.erase(pq.begin());
-    int u = p.second;
-    if(vis[u]) continue;
-    vis[u] = 1;
-    for(auto k : graph[u])
-    {
-      if(dist[k.first]>(dist[u]+k.second))
-      {
-        dist[k.first] = dist[u] + k.second;
-        pq.insert({dist[k.first],k.first});
-      }
-    }
-  }
-//   for(int i = 2;i<=n;i++) cout<<dist[i]<<" ";
+void Dijkstra(int n) {
+	// status: correct
+	// requirements: distance array(dist), visited array(vis) 
+	// graph : graph, set : pq
+	set<pair<ll,ll> > pq;
+	for(int i = 0;i<=n;i++) dist[i] = 1E9, vis[i] = 0;
+	dist[1] = 0; 
+	pq.insert({0,1});
+	while(!pq.empty())
+	{
+		pair<int,int> p = *pq.begin();
+		pq.erase(pq.begin());
+		int u = p.second;
+		if(vis[u]) continue;
+		vis[u] = 1;
+		for(auto k : graph[u])
+		{
+			if(dist[k.first]>(dist[u]+k.second))
+			{
+				dist[k.first] = dist[u] + k.second;
+				pq.insert({dist[k.first],k.first});
+			}
+		}
+	}
 }
 endsnippet
 
 snippet extended_gcd
 int gcdExtended(int a, int b, int *x, int *y)
 {
-    if (a == 0) {
-        *x = 0; *y = 1;
-        return b;
-    }
-    int x1, y1;
-    int gcd = gcdExtended(b%a, a, &x1, &y1);
-    *x = y1 - (b/a) * x1;
-    *y = x1;
-    return gcd;
+		if (a == 0) {
+				*x = 0; *y = 1;
+				return b;
+		}
+		int x1, y1;
+		int gcd = gcdExtended(b%a, a, &x1, &y1);
+		*x = y1 - (b/a) * x1;
+		*y = x1;
+		return gcd;
 }
 endsnippet
 
 snippet floyd
 void floyd(int n)
 { 
-  // distance matrix = dist
-  for(int k = 0;k<n;k++)
-    for(int i = 0;i<n;i++)
-     for(int j = 0;j<n;j++)
-      if(dist[i][k] + dist[k][j] < dist[i][j])
-       dist[i][j] = dist[i][k] + dist[k][j]; 
+	// distance matrix = dist
+	for(int k = 0;k<n;k++)
+		for(int i = 0;i<n;i++)
+		 for(int j = 0;j<n;j++)
+			if(dist[i][k] + dist[k][j] < dist[i][j])
+			 dist[i][j] = dist[i][k] + dist[k][j]; 
 }
 endsnippet
 
 snippet ncr
 void ncr(int n,int r, int mod)
 {
-  // function : inv_modulus, factorial array : fact
-  int val =  (long long)fact[n] * inv_modulus(fact[n-r],mod) % mod;
-  val = (long long) val * inv_modulus(fact[r],mod) % mod;
-  return val;
+	// function : inv_modulus, factorial array : fact
+	int val =	(long long)fact[n] * inv_modulus(fact[n-r],mod) % mod;
+	val = (long long) val * inv_modulus(fact[r],mod) % mod;
+	return val;
 }
 endsnippet
 
@@ -103,8 +136,8 @@ vector<int> KMPsearch(string pat, string txt)
 	int lps[M];
 	vector<int> indexes;
 	computeLPSArray(pat, M, lps);
-	int i = 0;  // index for txt[]
-	int j  = 0;  // index for pat[]
+	int i = 0;	// index for txt[]
+	int j	= 0;	// index for pat[]
 	while (i < N) {
 		if (pat[j] == txt[i]) j++, i++;
 		if (j == M) {
@@ -119,155 +152,129 @@ vector<int> KMPsearch(string pat, string txt)
 }
 endsnippet
 
-snippet segtree
+snippet segtree_build
 // tree array : tree, Array : arr
 void build(int k, int st, int en)
 {
-  //correct
-  if(st==en) tree[k] = arr[k];
-  else
-  {
-    int mid = (st+en)/2;
-    build(2*k+1,st,mid);
-    build(2*k+2,mid+1,en);
-    tree[k] = tree[2*k+1] + tree[2*k+2];
-  }
+	//correct
+	if(st==en) tree[k] = arr[k];
+	else
+	{
+		int mid = (st+en)/2;
+		build(2*k+1,st,mid);
+		build(2*k+2,mid+1,en);
+		tree[k] = tree[2*k+1] + tree[2*k+2];
+	}
 }
+endsnippet
+snippet segtree_update
 void update(int k, int st, int en, int idx, int value)
 {
-  // correct
-  if(st>en||st>idx||en<idx) return ;
-  if(st==en&&st==idx) tree[k] = value;
-  else
-  {
-    int mid = (st+en)/2;
-    update(2*k+1,st,mid,idx,value);
-    update(2*k+2,mid+1,en,idx,value);
-  }
+	// correct
+	if(st>en||st>idx||en<idx) return ;
+	if(st==en&&st==idx) tree[k] = value;
+	else
+	{
+		int mid = (st+en)/2;
+		update(2*k+1,st,mid,idx,value);
+		update(2*k+2,mid+1,en,idx,value);
+	}
 }
+endsnippet 
+snippet segtree_query
 int query(int k, int st, int en, int L, int R)
 {
-  // correct
-  if(st>en||L>R||L>en||st>R) return -1;
-  if(st==L&&en==R) return tree[k];
-  int mid = (st+en)/2;
-  if(R<=mid) return query(2*k+1,st,mid,L,R);
-  if(L>mid) return query(2*k+2,mid+1,en,L,R);
-  int ans = query(2*k+1,st,mid,L,mid) + query(2*k+2,mid+1,en,mid+1,R);
-  return ans;
+	// correct
+	if(st>en||L>R||L>en||st>R) return -1;
+	if(st==L&&en==R) return tree[k];
+	int mid = (st+en)/2;
+	if(R<=mid) return query(2*k+1,st,mid,L,R);
+	if(L>mid) return query(2*k+2,mid+1,en,L,R);
+	int ans = query(2*k+1,st,mid,L,mid) + query(2*k+2,mid+1,en,mid+1,R);
+	return ans;
 }
+endsnippet
+snippet segtree_update_range
 void updaterange(int k, int st, int en, int L, int R, int diff)
 {
-  // incomplete and incorrect
-  if(st>en||L>R||L>en||st>R) return ;
-  if(st==L&&en==R) tree[k]+=diff;
-  else
-  {
-    int mid = (st+en)/2;
-    if(R<=mid) updaterange(2*k+1,st,mid,L,R,diff);
-    else if(L>mid) updaterange(2*k+2,mid+1,en,L,R,diff);
-    else
-    {
-      update(2*k+1,st,mid,L,mid,diff);
-      update(2*k+2,mid+1,en,mid+1,R);
-    }
-  }
+	// incomplete and incorrect
+	if(st>en||L>R||L>en||st>R) return ;
+	if(st==L&&en==R) tree[k]+=diff;
+	else
+	{
+		int mid = (st+en)/2;
+		if(R<=mid) updaterange(2*k+1,st,mid,L,R,diff);
+		else if(L>mid) updaterange(2*k+2,mid+1,en,L,R,diff);
+		else
+		{
+			update(2*k+1,st,mid,L,mid,diff);
+			update(2*k+2,mid+1,en,mid+1,R);
+		}
+	}
 }
 endsnippet
 
-snippet factors
-vector<int> fact(int n)
+snippet divisors
+vector<int> get_divisors(int n)
 {
-  vector<int>facts;
-  for(int i=1;i<=sqrt(n);i++)
-  {
-    if(n%i==0)
-    {
-      facts.push_back(i);
-      if(i!=n/i)
-        facts.push_back(n/i);
-    }
-   return facts;
+	vector<int> divisors;
+	for(int i=1;i<=sqrt(n);i++)
+	{
+		if(n%i==0)
+		{
+			divisors.push_back(i);
+			if(i!=n/i)
+				divisors.push_back(n/i);
+		}
+	 return divisors;
 }
 endsnippet
 
-snippet primefactor
+snippet prime_factors
 vector<int> pfact_unique(int n)
 {
-  vector<int>primes = sieve_of_erathothesis(n);
+	// vector<int>primes = sieve_of_erathothesis(n);
+	// call sieve_of_erathothesis in main
  vector<int>pfacts;
  for(int prime:primes)
  {
-   if(n%prime==0)
-     pfacts.push_back(prime);
+	 if(n%prime==0)
+		 pfacts.push_back(prime);
  }
  return pfacts;
 }
 endsnippet
 
-snippet smallestprimefactor
+snippet smallest_prime_factor
 map<int,int> pfact_spf(int n)
 {
-  vector<int>sprime = smallest_prime_factors(n);
-  map<int,int>smallest_pfact_freq;
-  while(n>1)
-  {
-    smallest_pfact_freq[sprime[n]]+=1;
-    n=n/sprime[n];
-  }
+	vector<int>sprime = smallest_prime_factors(n);
+	map<int,int>smallest_pfact_freq;
+	while(n>1)
+	{
+		smallest_pfact_freq[sprime[n]]+=1;
+		n=n/sprime[n];
+	}
  return smallest_pfact_freq;
 }
 vector<int> smallest_fact(int n)
 {
-  vector<int>smallest_fac(n+1);
-  for(int i=1;i<=n;i++)
-    smallest_fac[i] = i;
-  for(int i=2;i<=n;i++)
-  {
-    if(smallest_fac[i]==i)
-    {
-      for(int j=i;j<=n;j+=i)
-      {
-        if(smallest_fac[j]>i)
-          smallest_fac[j]=i;
-      }
-    }
-  }
-  return smallest_fac;
+	vector<int>smallest_fac(n+1);
+	for(int i=1;i<=n;i++)
+		smallest_fac[i] = i;
+	for(int i=2;i<=n;i++)
+	{
+		if(smallest_fac[i]==i)
+		{
+			for(int j=i;j<=n;j+=i)
+			{
+				if(smallest_fac[j]>i)
+					smallest_fac[j]=i;
+			}
+		}
+	}
+	return smallest_fac;
 }
 
 endsnippet
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

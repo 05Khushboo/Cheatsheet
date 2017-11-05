@@ -1,6 +1,7 @@
 // correct
 int power(int x, int y, int mod)
 {
+  // verified
     int res = 1;    
     x = x % mod;
     while (y > 0) {

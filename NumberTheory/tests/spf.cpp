@@ -1,3 +1,9 @@
+#include <iostream>
+#include <map>
+#include <vector>
+#include <utility>
+
+using namespace std;
 
 vector<int> smallest_prime_factors;
 
@@ -25,5 +31,15 @@ vector<int> get_smallest_prime_factors(int n) {
   return smallest_prime_factors;
 }
 
-// in main
-smallest_prime_factors = get_smallest_prime_factors(N);
+int main(void){
+  smallest_prime_factors = get_smallest_prime_factors(1e6); // use it outside the function, just once
+  int t, n;
+  cin >> t;
+  while(t--){
+    cin >> n;
+    map<int, int> prime_factors_freq = get_prime_factors_freq(n);
+    for(pair<int, int> cPair: prime_factors_freq){
+      cout << cPair.first << " " << cPair.second << endl;
+    }
+  }
+}

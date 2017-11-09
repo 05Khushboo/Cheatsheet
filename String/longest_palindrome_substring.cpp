@@ -2,7 +2,7 @@
 string longest_palindrome_substring(string s)
 {
   string t = "#";
-  for(int i = 0;i<s.size();i++) t = t + s[i] + '#';
+  for(int i = 0;i<s.size();i++) t.push_back(s[i]), t.push_back('#');
   int n = t.size(); 
   int p[n];
   int C = 0, R = 0;
@@ -29,4 +29,5 @@ string longest_palindrome_substring(string s)
   for(int i = Leftboundary;i<n && i<=Rightboundary;i+=2) ans+=t[i];
   return ans;
 }
+
 
